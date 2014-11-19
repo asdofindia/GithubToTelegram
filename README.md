@@ -1,6 +1,6 @@
 #Github To Telegram #
 
-This script uses PyGithub to poll the Github api and send interesting events to your favorite group via Telegram-CLI
+A script that uses PyGithub to poll the Github api and send interesting events to your favorite group via Telegram-CLI
 
 ###Requirements###
 It's currently written in python3 (only because I hate unicode encoding errors). But it's easily portable to python2, just change the print functions. Otherwise install python3
