@@ -1,4 +1,4 @@
 config.py
 __pycache__
 *.pyc
-lastpoll
+data
