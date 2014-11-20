@@ -10,6 +10,8 @@ password = "krypton"
 # Remember, tg-cli wants to replace spaces with underscores
 togroup = "Xenonites_rock_the_world"
 
+shortenurl=False
+
 
 # add the apps you want to track here, in the following format
 # "<anyname>" : {"owner": "<ownername>",

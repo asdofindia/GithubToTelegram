@@ -16,7 +16,7 @@ class Bot(object):
 
     def __init__(self):
         super(Bot, self).__init__()
-        #self.arg = arg
+        # self.arg = arg
         self.username = config.username
         self.password = config.password
         self.auth = (self.username, self.password)
@@ -101,8 +101,9 @@ class Bot(object):
                 index = indextostart
                 while index >= 0:
                     commit = response.json()[index]
-                    tosend = "%s updated:\n%s\n~%s" % (
-                        app, commit['commit']['message'], commit['html_url'])
+                    tosend = "%s updated:\n%s\n%s" % (
+                        app, commit['commit']['message'],
+                        self.gitio(commit['html_url']))
                     self.sendtotg(tosend)
                     self.setconfig(
                         app, "commitssha", response.json()[index]['sha'])
@@ -124,9 +125,9 @@ class Bot(object):
                 index = indextostart
                 while index >= 0:
                     issue = response.json()[index]
-                    tosend = "%s created an issue: [%s]%s\n\n %s\n~%s" % (
-                        issue['user']['login'], app, issue['title'],
-                        issue['body'], issue['html_url'])
+                    tosend = "[%s] %s\n~%s\n %s\n%s" % (
+                        app, issue['title'], issue['user']['login'],
+                        issue['body'], self.gitio(issue['html_url']))
                     self.sendtotg(tosend)
                     self.setconfig(
                         app, "issuesid", response.json()[index]['id'])
@@ -148,10 +149,10 @@ class Bot(object):
                 index = indextostart
                 while index >= 0:
                     comment = response.json()[index]
-                    tosend = "%s commented on issue: [%s]%s\n\n %s\n~%s" % (
+                    tosend = '%s on: [%s] %s\n\n"%s"\n%s' % (
                         comment['user']['login'], app, self.getissue(
                             comment['issue_url']), comment['body'],
-                        comment['html_url'])
+                        self.gitio(comment['html_url']))
                     self.sendtotg(tosend)
                     self.setconfig(
                         app, "commentid", response.json()[index]['id'])
@@ -161,15 +162,29 @@ class Bot(object):
             print(response.json()[0]['html_url'])
         self.setconfig(app, "comments", response.headers['etag'])
 
+    def gitio(self, url):
+        short = requests.post('http://git.io', data={"url": url})
+        if config.shortenurl and short.headers['location']:
+            return short.headers['location']
+        else:
+            return url
+
     def sendtotg(self, message):
         togroup = config.togroup
         subprocess.Popen(['./grambot.sh', togroup, message])
 
     def start(self):
         self.stopped = False
+        counter = 0
         while not self.stopped:
-            self.controller()
+            counter += 1
+            print("Cycle:", counter)
+            try:
+                self.controller()
+            except requests.exceptions.ConnectionError:
+                time.sleep(200)
             time.sleep(120)
+            #os.system('cls' if os.name == 'nt' else 'clear')
 
     def stop(self):
         self.stopped = True
