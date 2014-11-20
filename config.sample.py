@@ -1,3 +1,6 @@
+#!/bin/python3
+# move this file to config.py
+
 # you need to save your github username and password
 # here so that maximum api calls can be made
 
