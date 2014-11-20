@@ -5,11 +5,11 @@ A script that uses PyGithub to poll the Github api and send interesting events t
 ###Requirements###
 It's currently written in python3 (only because I hate unicode encoding errors). But it's easily portable to python2, just change the print functions. Otherwise install python3
 
-    sudo apt-get install python3
+* `sudo apt-get install python3`
 
 And of course, you need the quintessential [tg-cli](https://github.com/vysheng/tg). 
 
-    Follow [vysheng/tg/#installation](https://github.com/vysheng/tg/#installation)
+* Follow [vysheng/tg/#installation](https://github.com/vysheng/tg/#installation)
 
 ### Edits to make ###
 
@@ -18,7 +18,7 @@ And of course, you need the quintessential [tg-cli](https://github.com/vysheng/t
 * Modify the chat name you want messages sent to
 * Modify the apps you want to track on github
 * Edit `grambot.sh`. Put the directory of tg-cli where TGDIR is assigned. Avoid trailing slash. If you use bash instead of zsh, you may have to change the magic hashbang in the first line to `#!/bin/sh` 
-* Within your tg-cli installation, you need to edit the `config.sample` to create a profile for the bot. Refer [https://github.com/vysheng/tg/blob/master/config.sample](this file). If you don't want to do this, just remove "-p kl" from grambot.sh
+* Within your tg-cli installation, you need to edit the `config.sample` to create a profile for the bot. Refer [this file](https://github.com/vysheng/tg/blob/master/config.sample). If you don't want to do this, just remove "-p kl" from grambot.sh
 
 ### Run ###
 
